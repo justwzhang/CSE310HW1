@@ -16,7 +16,7 @@ while True:
         temp = b'/favicon.ico'
         if tempMsg != temp:
             clientSocket = socket(AF_INET, SOCK_STREAM)
-            clientSocket.connect(('127.0.0.1', 6789)) #failes here
+            clientSocket.connect(('127.0.0.1', 6789))
             clientSocket.send(msg)
             connectionSocket.send('HTTP/1.1 200 OK\r\n'.encode())
             while True:
@@ -26,7 +26,7 @@ while True:
                 connectionSocket.send(payload)
             clientSocket.close()
         connectionSocket.close()
-    except :
+    except:
         print('failed')
         connectionSocket.send('HTTP/1.1 404 File not found\r\n'.encode())
         connectionSocket.close()
