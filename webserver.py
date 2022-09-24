@@ -2,9 +2,9 @@ from socket import *
 
 serverPort = 6789
 serverSocket = socket(AF_INET, SOCK_STREAM)
-# serverSocket.setsockopt(SOL_SOCKET, SO_REUSEADDR, 1)
+serverSocket.setsockopt(SOL_SOCKET, SO_REUSEADDR, 1)
 serverSocket.bind(('', serverPort))
-serverSocket.listen(1)
+serverSocket.listen(10)
 print('The server is ready to receive')
 while True:
     connectionSocket, addr = serverSocket.accept()
@@ -14,7 +14,7 @@ while True:
     try:
         # print(type(msg))
         msg = msg.split()[1]
-        temp = '/favicon.ico'
+        temp = b'/favicon.ico'
 
         html = 'html'
         png = 'png'
@@ -42,11 +42,8 @@ while True:
                     connectionSocket.send('Content-Type: image/jpg\r\n'.encode())
                 tempString = bytes('Content-Length: %s\r\n' % len(imageData), 'utf8')
                 connectionSocket.send(tempString)
-                print(imageData)
+                connectionSocket.send('\r\n'.encode())
                 connectionSocket.send(imageData)
-                # while imageData:
-                #     connectionSocket.send(imageData)
-                #     imageData = file.read(2048)
                 file.close()
             else:
                 connectionSocket.send('HTTP/1.1 404 File not found\r\n'.encode())
