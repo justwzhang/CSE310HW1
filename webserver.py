@@ -8,9 +8,7 @@ serverSocket.listen(10)
 print('The server is ready to receive')
 while True:
     connectionSocket, addr = serverSocket.accept()
-    # print("got connection")
     msg = connectionSocket.recv(2048).decode()
-    # print(msg)
     try:
         # print(type(msg))
         msg = msg.split()[1]
@@ -27,7 +25,6 @@ while True:
                 file = open(msg[1:])
                 data = file.read()
                 connectionSocket.send('HTTP/1.1 200 OK\r\n'.encode())
-                # connectionSocket.send('Content-Type: text/html\r\n')
                 for i in range(0, len(data)):
                     connectionSocket.send(data[i].encode())
                     file.close()
